@@ -1,0 +1,43 @@
+<!doctype html> <!-- 宣告使用 HTML5 文件格式 -->
+<html lang="zh-Hant"> <!-- 設定網頁語言為繁體中文 -->
+<head> <!-- 開始網頁標頭設定 -->
+  <meta charset="UTF-8"> <!-- 設定文件使用 UTF-8 編碼 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> <!-- 啟用手機與平板響應式視窗 -->
+  <title>p5.js 簡易指令測驗</title> <!-- 設定瀏覽器分頁標題 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- 預先連線至 Google Fonts 主網域 -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- 預先連線至 Google Fonts 字型檔網域 -->
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@400;500;600;700&family=Chiron+Sung+HK:wght@400;500;600;700&display=swap" rel="stylesheet"> <!-- 載入指定的中英文字型 -->
+  <style> /* 開始設定網頁樣式 */
+    :root { /* 建立共用 CSS 字型變數 */
+      --font-hei: "Chiron Hei HK", sans-serif; /* 設定中文與中文標點字型 */
+      --font-sung: "Chiron Sung HK", sans-serif; /* 設定英文與數字字型 */
+      --font-mixed: "Chiron Hei HK", "Chiron Sung HK", sans-serif; /* 設定網頁備用混合字型 */
+    } /* 結束 CSS 字型變數設定 */
+    * { box-sizing: border-box; } /* 讓所有元素的尺寸包含內距與邊框 */
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #f4f1ea; } /* 讓頁面填滿視窗並隱藏捲軸 */
+    body { font-family: var(--font-mixed); touch-action: none; -webkit-tap-highlight-color: transparent; } /* 設定全頁字型與觸控行為 */
+    #app { width: 100%; height: 100%; font-family: var(--font-mixed); } /* 設定 p5.js 畫布容器大小 */
+    canvas { display: block; width: 100%; height: 100%; touch-action: none; } /* 讓畫布填滿畫面並接收觸控事件 */
+    #loading-overlay { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; background: #f4f1ea; color: #333333; font-family: var(--font-hei); font-size: 20px; } /* 顯示字型與程式初始載入畫面 */
+  </style> <!-- 結束網頁樣式設定 -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js" defer></script> <!-- 載入 p5.js 函式庫 -->
+  <script defer> /* 開始設定等待字型後載入 sketch.js 的程式 */
+    window.addEventListener("load", async function () { /* 等待網頁資源載入完成 */
+      const fontPromises = [ /* 建立兩個指定字型的載入工作 */
+        document.fonts.load('400 16px "Chiron Hei HK"'), /* 載入中文黑體字型 */
+        document.fonts.load('400 16px "Chiron Sung HK"') /* 載入英文與數字宋體字型 */
+      ]; /* 完成字型載入工作的建立 */
+      await Promise.all(fontPromises); /* 等待兩個字型都完成載入 */
+      await document.fonts.ready; /* 等待瀏覽器字型集合準備完成 */
+      const sketchScript = document.createElement("script"); /* 建立 sketch.js 的 script 元素 */
+      sketchScript.src = "sketch.js"; /* 指定要載入的程式檔案 */
+      sketchScript.async = false; /* 保持程式載入順序穩定 */
+      document.body.appendChild(sketchScript); /* 字型完成後載入 sketch.js */
+    }); /* 結束網頁載入事件處理 */
+  </script> <!-- 結束等待字型的程式設定 -->
+</head> <!-- 結束網頁標頭設定 -->
+<body> <!-- 開始網頁主體 -->
+  <div id="loading-overlay">字型與題庫載入中……</div> <!-- 顯示初始字型與題庫載入提示 -->
+  <main id="app" aria-label="p5.js 簡易指令測驗"></main> <!-- 建立承載 p5.js 畫布的容器 -->
+</body> <!-- 結束網頁主體 -->
+</html> <!-- 結束 HTML 文件 -->
